@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="Website/inc :: links">
+</head>
+<body class="gradient-bg">
+  <div th:replace="Website/inc :: header"></div>
+  <main class="pt-90">
+    <div class="mb-4 pb-4"></div>
+    <section class="shop-checkout container">
+      <h2 class="page-title">Cart</h2>
+      <div class="checkout-steps">
+        <a href="/cart" class="checkout-steps__item active">
+          <span class="checkout-steps__item-number">01</span>
+          <span class="checkout-steps__item-title">
+            <span>Shopping Bag</span>
+            <em>Manage Your Items List</em>
+          </span>
+        </a>
+        <a href="/checkout" class="checkout-steps__item">
+          <span class="checkout-steps__item-number">02</span>
+          <span class="checkout-steps__item-title">
+            <span>Shipping and Checkout</span>
+            <em>Checkout Your Items List</em>
+          </span>
+        </a>
+        <a href="/order-confirmation" class="checkout-steps__item">
+          <span class="checkout-steps__item-number">03</span>
+          <span class="checkout-steps__item-title">
+            <span>Confirmation</span>
+            <em>Review And Submit Your Order</em>
+          </span>
+        </a>
+      </div>
+      <div class="shopping-cart">
+        <div class="cart-table__wrapper">
+          <table class="cart-table">
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th></th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th> <!-- Cột subtotal -->
+              <th></th>
+            </tr>
+            </thead>
+            <tbody id="cart-items">
+            <tr th:each="item : ${cartItems}">
+              <td><img th:src="@{${item.thumbnail}}" width="120" height="120" alt=""></td>
+              <td><h4 th:text="${item.name}"></h4></td>
+              <td th:text="${item.price} + ' $'"></td>
+              <td>
+                <!-- Form cập nhật số lượng -->
+                <form th:action="@{/cart/update/{id}(id=${item.id})}" method="post">
+                  <input  type="number" name="quantity" th:value="${item.quantity}" min="1"
+                         onchange="this.form.submit()" style="width:30px;">  <!-- Khi thay đổi số lượng sẽ tự gửi form -->
+                </form>
+              </td>
+              <td th:text="${item.price * item.quantity} + ' $'"></td>
+              <td>
+                <a th:href="@{/cart/remove/{id}(id=${item.id})}" class="remove-cart">X</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="cart-table-footer">
+            <form action="#" class="position-relative bg-body">
+              <input class="form-control" type="text" name="coupon_code" placeholder="Coupon Code">
+              <input class="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4" type="submit"
+                value="APPLY COUPON">
+            </form>
+            <button class="btn btn-light">UPDATE CART</button>
+          </div>
+        </div>
+        <div class="shopping-cart__totals-wrapper">
+          <div class="sticky-content">
+            <div class="shopping-cart__totals">
+              <h3>Cart Totals</h3>
+              <table class="cart-totals">
+                <tbody>
+                <tr>
+                  <th>Subtotal</th>
+                  <td th:text="'$' + ${subtotal}"></td>
+                </tr>
+                <tr>
+                  <th>Shipping</th>
+                  <td>
+                    <form th:action="@{/cart/update-shipping}" method="post">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="shippingFee" value="0" id="free_shipping" checked>
+                        <label class="form-check-label" for="free_shipping">Free shipping</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="shippingFee" value="49" id="flat_rate">
+                        <label class="form-check-label" for="flat_rate">Flat rate: $49</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="shippingFee" value="8" id="local_pickup">
+                        <label class="form-check-label" for="local_pickup">Local pickup: $8</label>
+                      </div>
+                      <button type="submit" class="btn btn-light mt-2">Update Shipping</button>
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <th>VAT</th>
+                  <td th:text="'$' + ${vat}"></td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td th:text="'$' + ${total}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mobile_fixed-btn_wrapper">
+              <div class="button-wrapper container">
+                <a href="/checkout" class="btn btn-primary btn-checkout">PROCEED TO CHECKOUT</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <div th:replace="Website/inc :: footer"></div>
+</body>
+</html>

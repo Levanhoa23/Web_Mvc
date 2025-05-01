@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="Admin/inc :: links">
+
+</head>
+
+<body class="body">
+    <div id="wrapper">
+        <div id="page" class="">
+            <div class="layout-wrap">
+                <div class="section-menu-left">
+                    <div class="box-logo">
+                       <div th:replace="Admin/inc :: logo"></div>
+                        <div class="button-show-hide">
+                            <i class="icon-menu-left"></i>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <div class="center-item">
+                            <div class="center-heading">Main Home</div>
+                            <ul class="menu-list">
+                                <li class="menu-item">
+                                    <a href="/Admin" class="">
+                                        <div class="icon"><i class="icon-grid"></i></div>
+                                        <div class="text">Dashboard</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div th:replace="Admin/inc :: center"></div>
+                    </div>
+                </div>
+                <div class="section-content-right">
+
+                   <div th:replace="Admin/inc :: header-dashboard"></div>
+                    <div class="main-content">
+
+                        <!-- main-content-wrap -->
+                        <div class="main-content-inner">
+                            <!-- main-content-wrap -->
+                            <div class="main-content-wrap">
+                                <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+                                    <h3>Add Product</h3>
+                                    <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+                                        <li>
+                                            <a href="index-2.html">
+                                                <div class="text-tiny">Dashboard</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="icon-chevron-right"></i>
+                                        </li>
+                                        <li>
+                                            <a href="/all-product">
+                                                <div class="text-tiny">Products</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="icon-chevron-right"></i>
+                                        </li>
+                                        <li>
+                                            <div class="text-tiny">Add product</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <form action="/add-product" method="post">
+                                    <div class="wg-box">
+                                        <fieldset class="name">
+                                            <div class="body-title mb-10">Product name <span class="tf-color-1">*</span></div>
+                                            <input class="mb-10" type="text" placeholder="Enter product name" name="name" tabindex="0" aria-required="true" required="">
+                                            <div class="text-tiny">Do not exceed 100 characters when entering the product name.</div>
+                                        </fieldset>
+
+                                        <div class="gap22 cols">
+                                            <fieldset class="category">
+                                                <div class="body-title mb-10">Category <span class="tf-color-1">*</span></div>
+                                                <div class="select">
+                                                    <select name="category" required>
+                                                        <th:block th:each="category : ${categories}">
+                                                            <option th:value="${category.id}" th:text="${category.name}"></option>
+                                                        </th:block>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="name">
+                                                <div class="body-title mb-10">Price <span class="tf-color-1">*</span></div>
+                                                <input class="mb-10" type="text" placeholder="Enter regular price" name="price" tabindex="0"aria-required="true" required="">
+                                            </fieldset>
+                                        </div>
+
+                                        <fieldset class="description">
+                                            <div class="body-title mb-10">Description <span class="tf-color-1">*</span></div>
+                                            <textarea class="mb-10" name="description" placeholder="Description" tabindex="0" aria-required="true" required=""></textarea>
+                                            <div class="text-tiny">Do not exceed 100 characters when entering the product description.</div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="wg-box">
+                                        <label for="thumbnail">Thumbnail *</label>
+                                        <input type="text" id="thumbnail" name="thumbnail" required placeholder="/assets/images/products/23.jpg">
+
+                                        <fieldset class="name">
+                                            <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span></div>
+                                            <input class="mb-10" type="text" placeholder="Enter quantity" name="quantity" tabindex="0"  aria-required="true" required="">
+                                        </fieldset>
+
+                                        <div class="cols gap10">
+                                            <button class="tf-button w-full" type="submit">Add product</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                            <!-- /main-content-wrap -->
+                        </div>
+                        <!-- /main-content-wrap -->
+                    <div th:replace="Admin/inc :: bottom-page"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="Admin/inc :: footer"></div>
+</body>
+
+</html>
